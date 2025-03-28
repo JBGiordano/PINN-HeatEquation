@@ -58,6 +58,11 @@ t_data_grid = t_data_grid[:,:,None]
 input_data = torch.cat((x_data_grid, t_data_grid), dim=-1)
 
 #%%
+
+iterations = 10000
+lr = 1e-5
+
+
 results_dir = os.path.join(os.path.dirname(__file__), '..', 'results')
 path_pinn = os.path.join(results_dir, 'pinn.pth') if os.path.exists(os.path.join(results_dir, 'pinn.pth')) else None
 path_loss = os.path.join(results_dir, 'loss.txt') if os.path.exists(os.path.join(results_dir, 'loss.txt')) else None
