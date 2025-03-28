@@ -61,8 +61,8 @@ input_data = torch.cat((x_data_grid, t_data_grid), dim=-1)
 #Values to change during interrupts
 it =  10000              #iterations
 lr = 1e-5                #learning rate
-l =    1e-5
-lc = 1e-4
+l =    1e-5              #physic's factor
+lc = 1e-4                #boundry's factor
 k = 1                    #estimed k
 
 results_dir = os.path.join(os.path.dirname(__file__), '..', 'results')
