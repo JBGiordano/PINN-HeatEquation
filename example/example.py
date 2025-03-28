@@ -9,11 +9,11 @@ import matplotlib.pyplot as plt
 base_dir = os.path.dirname(__file__)
 dfpath = os.path.join(base_dir, 'data', 'temperatures.csv')
 tpath = os.path.join(base_dir, 'data', 'times.csv')
+
 #%%   read csv
 df = pd.read_csv(dfpath)
 t = pd.read_csv(tpath)
 t = t-820469098 #correct times :)
-
 
 #%%  Boundary conditions
 x_data_cc50 = (50* torch.tensor( torch.ones(100))).view(-1,1) .requires_grad_(True)#100 posiciones para x = 0, 100 para x = 2pi
