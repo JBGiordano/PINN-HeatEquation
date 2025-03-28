@@ -9,14 +9,10 @@ import matplotlib.pyplot as plt
 
 def save_files(pinn, loss_plt, base_dir=None, prefix='pinn', loss_filename='loss.txt'):
     if base_dir is None:
-        # Ruta a la carpeta 'main', ya que 'train.py' está en 'pypinn'
         base_dir = os.path.join(os.path.dirname(__file__), '..', 'results')
-    
-    # Crear la carpeta 'results' si no existe
     if not os.path.exists(base_dir):
         os.makedirs(base_dir)
-    
-    # Guardar el modelo, renombrando si el archivo ya existe
+        
     model_path = os.path.join(base_dir, f'{prefix}.pth')
     counter = 1
     while os.path.exists(model_path):
@@ -24,8 +20,7 @@ def save_files(pinn, loss_plt, base_dir=None, prefix='pinn', loss_filename='loss
         counter += 1
     
     torch.save(pinn.state_dict(), model_path)
-
-    # Guardar la pérdida en loss.txt (sin cambios de nombre)
+    
     loss_path = os.path.join(base_dir, loss_filename)
     with open(loss_path, 'w') as file:
         for sublist in loss_plt:
@@ -71,15 +66,10 @@ def train(k,lr,iterations, ls ,input_data,u_data,
             physics = pinn.ka*8324*dx2-dt
             
             loss2 =  ls[0] * torch.mean(physics**2)  #Weighted MSE error by l
-            #loss = loss1 + loss2 + loss3  #sum all the errors
-            loss =  loss2 + loss1 + loss4 + loss3
-            #loss_list = [loss1,loss2,loss4,loss3]
-            #loss_plt.append(loss_list)
-            
+            loss =  loss2 + loss1 + loss4 + loss3            
             loss.backward()
             
-            optimizer.step()
-            
+            optimizer.step()      
             with torch.autograd.no_grad():
                 
                 loss_plt.append([float(loss1), float(loss2), float(loss3+loss4)])
@@ -92,8 +82,7 @@ def train(k,lr,iterations, ls ,input_data,u_data,
                     x_values = [sublist[0] for sublist in loss_plt]  # "Data"
                     y_values = [sublist[1] for sublist in loss_plt]  # "Physics"
                     z_values = [sublist[2] for sublist in loss_plt]  # "Boundary"
-    
-                    # Plot the data
+                    
                     ax.plot(range(len(loss_plt)), y_values,  label="Physics")
                     ax.plot(range(len(loss_plt)), x_values,  label="Data")
                     ax.plot(range(len(loss_plt)), z_values,  label="Boundary")
