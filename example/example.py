@@ -58,16 +58,18 @@ t_data_grid = t_data_grid[:,:,None]
 input_data = torch.cat((x_data_grid, t_data_grid), dim=-1)
 
 #%%
-
-iterations = 10000
-lr = 1e-5
-
+#Values to change during interrupts
+it =  10000              #iterations
+lr = 1e-5                #learning rate
+l =    1e-5
+lc = 1e-4
+k = 1                    #estimed k
 
 results_dir = os.path.join(os.path.dirname(__file__), '..', 'results')
 path_pinn = os.path.join(results_dir, 'pinn.pth') if os.path.exists(os.path.join(results_dir, 'pinn.pth')) else None
 path_loss = os.path.join(results_dir, 'loss.txt') if os.path.exists(os.path.join(results_dir, 'loss.txt')) else None
 
-loss_plt, pinn = train(1.6, 1e-1,10000, [1e-5,1e-4] ,input_data,u_data,
+loss_plt, pinn = train(k, lr,iterations, [l,lc] ,input_data,u_data,
           input_cc50,input_cc0,x_data_cc50,
           x_data_cc0,input_physics,x_grid,t_grid,
           path_pinn=path_pinn, path_loss=path_loss)
