@@ -5,11 +5,15 @@ import torch
 from torch.autograd import Variable
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 from IPython.display import clear_output
-plt.rcParams["font.family"] = "serif"
+import sys
+import os
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.join(base_dir, 'example', 'data'))
+sys.path.append(os.path.join(base_dir, 'extra'))
 
 #%%   read csv
-df = pd.read_csv(r'DATA/Temperatures.csv')
-t = pd.read_csv(r'DATA/Times.csv')
+df = pd.read_csv(os.path.join(base_dir, 'example', 'data', 'temperatures.csv'))
+t = pd.read_csv(os.path.join(base_dir, 'example', 'data', 'times.csv'))
 t = t-820469098 #correct times :)
 
 #%%   Neumann boundry condition
@@ -91,11 +95,11 @@ input_data = torch.cat((x_data_grid, t_data_grid), dim=-1)
 pinn2 = MLP2([2,64,64,64, 64,1])
 
 #%%   import the PINN if it is saved; otherwise, it starts running from scratch.
-pinn2.load_state_dict(torch.load('pinn2_loss_perf_1e-5.pth'))
+pinn2.load_state_dict(torch.load(os.path.join(base_dir, 'extra', 'pinn2_loss_perf_1e-5.pth')))
 pinn2.eval()
 
 #%%   Import loss if it is saved
-with open('loss_perf_1e-5.txt', 'r') as file:
+with open(os.path.join(base_dir, 'extra', 'loss_perf_1e-5.txt'), 'r') as file:
     list_ = file.readlines()
 loss_plt = [line.strip() for line in list_]
 
