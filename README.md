@@ -6,5 +6,5 @@ A typical experience in a physics teaching lab is the study of heat transfer in 
 
 With this data, the most common analysis is to estimate the material's diffusivity coefficient. The problem is that the solutions to the heat equation, considering the boundary conditions, are not trivial and always require excessive approximations.
 
-For this reason, one solution using the acquired data is to use a PINN. This is a multilayer neural network trained using a loss function derived from the differential equation itself. For more information see this [paper](https://www.sciencedirect.com/science/article/abs/pii/S0021999118307125).
+For this reason, one solution using the acquired data is to use a PINN. This is a multilayer neural network trained using a loss function derived from the differential equation itself. For more information see the paper ['Physics-informed neural networks: A deep learning framework for solving forward and inverse problems involving nonlinear partial differential equations'](https://www.sciencedirect.com/science/article/abs/pii/S0021999118307125) .
 
